@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Regomoditswe Mofomme — IT Audit & Data Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05060f;--surface:#0b0d1a;--card:#0f1124;
+  --purple:#7c3aed;--purple-light:#a855f7;
+  --blue:#3b82f6;--blue-light:#60a5fa;
+  --accent:#c084fc;--glow:rgba(124,58,237,0.35);
+  --text:#e2e8f0;--muted:#64748b;
+  --border:rgba(124,58,237,0.2);--border-bright:rgba(168,85,247,0.5);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
+.cursor{width:10px;height:10px;background:var(--purple-light);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;box-shadow:0 0 15px var(--purple-light)}
+.cursor-ring{width:40px;height:40px;border:1px solid rgba(168,85,247,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--blue),var(--accent));width:0%;z-index:500;box-shadow:0 0 12px var(--glow)}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,58,237,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:.3}
+.orb1{width:500px;height:500px;background:var(--purple);top:-150px;left:-150px;animation:drift 10s ease-in-out infinite alternate}
+.orb2{width:400px;height:400px;background:var(--blue);bottom:20%;right:-100px;animation:drift 14s ease-in-out infinite alternate-reverse}
+.orb3{width:300px;height:300px;background:var(--accent);top:50%;left:40%;animation:drift 12s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,30px) scale(1.1)}}
+nav{position:fixed;top:0;left:0;right:0;padding:1.2rem 5vw;display:flex;justify-content:space-between;align-items:center;z-index:100;backdrop-filter:blur(16px);background:rgba(5,6,15,.7);border-bottom:1px solid var(--border);opacity:0;animation:fadeDown .8s .4s forwards}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;background:linear-gradient(135deg,var(--purple-light),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.02em}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--accent)}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 5vw 6rem;position:relative;z-index:1;overflow:hidden}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(124,58,237,.15);border:1px solid var(--border-bright);color:var(--accent);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:2rem;width:fit-content;opacity:0;animation:fadeUp .8s .3s forwards}
+.badge-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;box-shadow:0 0 8px #22c55e;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(48px,9vw,110px);font-weight:700;line-height:.93;letter-spacing:-.03em;margin-bottom:2rem}
+.hero-name .line1{display:block;background:linear-gradient(135deg,#fff 0%,var(--blue-light) 50%,var(--purple-light) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:0;transform:translateY(60px);animation:slideUp 1s .4s cubic-bezier(.23,1,.32,1) forwards}
+.hero-name .line2{display:block;font-style:italic;font-weight:400;color:var(--muted);font-size:.75em;opacity:0;transform:translateY(60px);animation:slideUp 1s .55s cubic-bezier(.23,1,.32,1) forwards}
+.hero-title{font-size:clamp(13px,1.8vw,17px);color:var(--purple-light);font-weight:500;letter-spacing:.04em;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .8s forwards}
+.hero-desc{max-width:520px;color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:3rem;opacity:0;animation:fadeUp .8s 1s forwards}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s 1.2s forwards}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;padding:14px 32px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.05em;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 30px rgba(124,58,237,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(124,58,237,.6)}
+.btn-outline{border:1px solid var(--border-bright);color:var(--accent);padding:14px 32px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.05em;transition:background .3s,transform .3s}
+.btn-outline:hover{background:rgba(124,58,237,.1);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:3rem;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border);opacity:0;animation:fadeUp .8s 1.4s forwards}
+.stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--purple-light),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.hero-card{position:absolute;right:8vw;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;width:280px;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,.5);opacity:0;animation:fadeIn 1s 1.2s forwards}
+.hero-card::before{content:'';position:absolute;inset:-1px;border-radius:16px;background:linear-gradient(135deg,var(--purple),var(--blue),transparent);z-index:-1;opacity:.3}
+.card-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:1rem;box-shadow:0 0 30px var(--glow)}
+.card-name{font-weight:600;font-size:15px;color:#fff}
+.card-role{font-size:11px;color:var(--accent);margin-bottom:1rem}
+.card-info{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:.5rem}
+.card-info span{display:flex;align-items:center;gap:.5rem}
+.card-info span::before{content:'◆';font-size:6px;color:var(--purple-light)}
+section{padding:7rem 5vw;position:relative;z-index:1}
+.section-label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--purple-light);margin-bottom:.8rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:4rem}
+.section-title span{background:linear-gradient(135deg,var(--purple-light),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.exp-grid{display:flex;flex-direction:column;gap:1.5rem}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2.5rem;display:grid;grid-template-columns:200px 1fr;gap:2.5rem;transition:border-color .4s,box-shadow .4s,transform .4s;position:relative;overflow:hidden}
+.exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--purple),var(--blue));opacity:0;transition:opacity .4s}
+.exp-card:hover{border-color:var(--border-bright);box-shadow:0 8px 40px rgba(124,58,237,.2);transform:translateX(4px)}
+.exp-card:hover::before{opacity:1}
+.exp-period{font-size:11px;color:var(--purple-light);font-weight:600;letter-spacing:.05em;margin-bottom:.5rem;text-transform:uppercase}
+.exp-company{font-size:13px;color:var(--muted)}
+.exp-location{font-size:11px;color:var(--muted);opacity:.7;margin-top:.3rem}
+.exp-type{display:inline-block;font-size:10px;padding:3px 10px;border-radius:100px;background:rgba(124,58,237,.15);border:1px solid var(--border-bright);color:var(--accent);margin-top:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.exp-role{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:1rem}
+.exp-desc{color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:1.5rem}
+.exp-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag{font-size:10px;padding:4px 12px;border-radius:100px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:var(--blue-light);letter-spacing:.05em;text-transform:uppercase}
+.skills-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;transition:border-color .4s}
+.skill-card:hover{border-color:var(--border-bright)}
+.skill-card-title{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--purple-light);margin-bottom:1.8rem;display:flex;align-items:center;gap:.5rem}
+.skill-card-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.skill-item{margin-bottom:1.4rem}
+.skill-head{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px}
+.skill-head span:last-child{color:var(--accent);font-weight:600}
+.skill-track{height:3px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden}
+.skill-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--purple),var(--blue-light));width:0%;transition:width 1.6s cubic-bezier(.23,1,.32,1);box-shadow:0 0 10px rgba(124,58,237,.5)}
+.tech-grid{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
+.tech-pill{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 18px;font-size:12px;color:var(--text);transition:border-color .3s,color .3s,box-shadow .3s;cursor:default}
+.tech-pill:hover{border-color:var(--purple-light);color:var(--purple-light);box-shadow:0 0 20px rgba(124,58,237,.2)}
+.edu-grid{display:flex;flex-direction:column;gap:1.5rem}
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2.5rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;transition:border-color .4s,box-shadow .4s}
+.edu-card:hover{border-color:var(--border-bright);box-shadow:0 8px 40px rgba(59,130,246,.15)}
+.edu-degree{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:.4rem}
+.edu-field{font-size:13px;color:var(--muted);margin-bottom:.8rem}
+.edu-school{font-size:12px;color:var(--blue-light);font-weight:600}
+.edu-period{font-size:11px;color:var(--purple-light);text-align:right;font-weight:600;letter-spacing:.05em;white-space:nowrap}
+.edu-badge{font-size:10px;padding:3px 10px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:var(--blue-light);border-radius:100px;margin-top:.5rem;display:inline-block}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center}
+.contact-headline{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,60px);font-weight:700;line-height:1.1;margin-bottom:1.5rem}
+.contact-headline span{background:linear-gradient(135deg,var(--purple-light),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.contact-sub{color:var(--muted);font-size:15px;max-width:380px}
+.contact-links{display:flex;flex-direction:column;gap:1rem}
+.contact-link{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem 1.8rem;text-decoration:none;color:var(--text);transition:border-color .3s,box-shadow .3s,transform .3s;font-size:13px;font-weight:500}
+.contact-link:hover{border-color:var(--purple-light);box-shadow:0 0 30px rgba(124,58,237,.2);transform:translateX(4px);color:var(--purple-light)}
+footer{padding:2.5rem 5vw;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);z-index:1;position:relative}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.23,1,.32,1),transform .9s cubic-bezier(.23,1,.32,1)}
+.reveal.visible{opacity:1;transform:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes slideUp{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:900px){.hero-card{display:none}.exp-card,.contact-wrap{grid-template-columns:1fr}.edu-card{grid-template-columns:1fr}.edu-period{text-align:left}}
+@media(max-width:600px){.nav-links{display:none}section{padding:5rem 1.5rem}.hero{padding:7rem 1.5rem 4rem}.hero-stats{gap:2rem;flex-wrap:wrap}footer{flex-direction:column;gap:.5rem;text-align:center}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<nav>
+  <div class="nav-logo">RM</div>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-badge"><span class="badge-dot"></span>Open to opportunities</div>
+  <h1 class="hero-name">
+    <span class="line1">Regomoditswe</span>
+    <span class="line2">(Collen) Mofomme</span>
+  </h1>
+  <div class="hero-title">BCom Information Systems Graduate &nbsp;·&nbsp; Android Developer &nbsp;·&nbsp; IT Audit & Data Analytics Trainee</div>
+  <p class="hero-desc">Passionate about the intersection of technology, audit, and data. Currently evaluating IT controls and systems at SNG Grant Thornton, Midrand — building a career at the edge of tech and assurance.</p>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="#contact">Get In Touch</a>
+    <a class="btn-outline" href="https://www.linkedin.com/in/regomoditswe-mofomme-072a2b238" target="_blank">LinkedIn Profile</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">1+</div><div class="stat-label">Years Experience</div></div>
+    <div><div class="stat-num">18+</div><div class="stat-label">Skills</div></div>
+    <div><div class="stat-num">125</div><div class="stat-label">Connections</div></div>
+    <div><div class="stat-num">UJ</div><div class="stat-label">Graduate</div></div>
+  </div>
+  <div class="hero-card">
+    <div class="card-avatar">RM</div>
+    <div class="card-name">Regomoditswe Mofomme</div>
+    <div class="card-role">IT Audit Trainee @ SNG Grant Thornton</div>
+    <div class="card-info">
+      <span>Midrand, Gauteng, ZA · Hybrid</span>
+      <span>BCom Information Systems</span>
+      <span>Android Developer</span>
+      <span>Data Analytics</span>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label reveal">Work Experience</div>
+  <h2 class="section-title reveal">Where I've <span>Worked</span></h2>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div>
+        <div class="exp-period">Feb 2025 – Present</div>
+        <div class="exp-company">SNG Grant Thornton</div>
+        <div class="exp-location">Midrand, Gauteng · Hybrid</div>
+        <div class="exp-type">Internship · 1 yr 1 mo</div>
+      </div>
+      <div>
+        <div class="exp-role">IT Audit Intern</div>
+        <div class="exp-desc">Assist in evaluating and improving the effectiveness of an organization's IT controls and systems. Conduct IT general controls testing, data analytics procedures, and risk assessment engagements across multiple client portfolios. Apply analytical skills and creative problem solving to identify control gaps and support audit recommendations.</div>
+        <div class="exp-tags">
+          <span class="tag">IT Controls</span>
+          <span class="tag">Data Analytics</span>
+          <span class="tag">Risk Assessment</span>
+          <span class="tag">R / RStudio</span>
+          <span class="tag">Analytical Skills</span>
+          <span class="tag">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-label reveal">Capabilities</div>
+  <h2 class="section-title reveal">Skills & <span>Expertise</span></h2>
+  <div class="skills-wrap">
+    <div class="skill-card reveal">
+      <div class="skill-card-title">Audit & Analytics</div>
+      <div class="skill-item"><div class="skill-head"><span>IT Audit</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Data Analytics</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>IT Controls Testing</span><span>78%</span></div><div class="skill-track"><div class="skill-fill" data-width="78"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Risk Assessment</span><span>74%</span></div><div class="skill-track"><div class="skill-fill" data-width="74"></div></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-title">Programming & Dev</div>
+      <div class="skill-item"><div class="skill-head"><span>R (Programming Language)</span><span>80%</span></div><div class="skill-track"><div class="skill-fill" data-width="80"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>RStudio</span><span>78%</span></div><div class="skill-track"><div class="skill-fill" data-width="78"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Android Development</span><span>72%</span></div><div class="skill-track"><div class="skill-fill" data-width="72"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Python / C#</span><span>68%</span></div><div class="skill-track"><div class="skill-fill" data-width="68"></div></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-title">Core Competencies</div>
+      <div class="skill-item"><div class="skill-head"><span>Analytical Thinking</span><span>90%</span></div><div class="skill-track"><div class="skill-fill" data-width="90"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Creative Problem Solving</span><span>88%</span></div><div class="skill-track"><div class="skill-fill" data-width="88"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Algorithm Design</span><span>76%</span></div><div class="skill-track"><div class="skill-fill" data-width="76"></div></div></div>
+      <div class="skill-item"><div class="skill-head"><span>Group Presentations</span><span>82%</span></div><div class="skill-track"><div class="skill-fill" data-width="82"></div></div></div>
+    </div>
+  </div>
+  <div class="tech-grid reveal">
+    <div class="tech-pill">R Language</div><div class="tech-pill">RStudio</div><div class="tech-pill">Python</div>
+    <div class="tech-pill">C#</div><div class="tech-pill">Android</div><div class="tech-pill">IT Audit</div>
+    <div class="tech-pill">Data Analytics</div><div class="tech-pill">Algorithms</div>
+    <div class="tech-pill">Information Assurance</div><div class="tech-pill">IT Controls</div>
+    <div class="tech-pill">Cybersecurity</div><div class="tech-pill">Problem Solving</div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-label reveal">Academic Background</div>
+  <h2 class="section-title reveal">Education & <span>Training</span></h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">BCom Information Systems</div>
+        <div class="edu-field">Computer and Information Systems Security / Information Assurance</div>
+        <div class="edu-school">University of Johannesburg</div>
+        <div class="edu-badge">C# · Group Presentations · +3 skills</div>
+      </div>
+      <div><div class="edu-period">Jan 2022 – Dec 2024</div></div>
+    </div>
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">Grit Africa Lab BootCamp</div>
+        <div class="edu-field">Programming &amp; Algorithms — Python, problem-solving techniques, and algorithm design</div>
+        <div class="edu-school">Johannesburg Business School (JBS)</div>
+        <div class="edu-badge">Creative Problem Solving · Algorithms · +1 skill</div>
+      </div>
+      <div><div class="edu-period">Sep 2024 – Nov 2024</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="reveal">
+      <div class="section-label">Get In Touch</div>
+      <div class="contact-headline">Let's <span>connect</span> &amp; build together.</div>
+      <p class="contact-sub">Whether it's IT audit, data analytics, Android development, or just a great conversation — I'm open to meaningful opportunities and collaborations across tech and assurance.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="https://www.linkedin.com/in/regomoditswe-mofomme-072a2b238" target="_blank"><span>linkedin.com/in/regomoditswe-mofomme</span><span>→</span></a>
+      <a class="contact-link" href="mailto:your.email@example.com"><span>your.email@example.com</span><span>✉</span></a>
+      <a class="contact-link" href="#"><span>Johannesburg, Gauteng, South Africa</span><span>📍</span></a>
+      <a class="contact-link" href="#"><span>Download CV</span><span>↓</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Regomoditswe (Collen) Mofomme</span>
+  <span style="background:linear-gradient(135deg,var(--purple-light),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:600">IT Audit · Data Analytics · Android Dev</span>
+  <span>Johannesburg, ZA</span>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='18px';cursor.style.height='18px';ring.style.width='60px';ring.style.height='60px';});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='40px';ring.style.height='40px';});
+});
+const bar=document.getElementById('progress');
+window.addEventListener('scroll',()=>bar.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+const skillObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.skill-fill').forEach(f=>setTimeout(()=>f.style.width=f.dataset.width+'%',100));skillObs.unobserve(e.target);}});
+},{threshold:.2});
+document.querySelectorAll('.skill-card').forEach(c=>skillObs.observe(c));
+</script>
+</body>
+</html>
